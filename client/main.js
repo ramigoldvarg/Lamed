@@ -5,22 +5,11 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './reducers/reducer_root.js';
 import Counter from './containers/counter.js';
+import Home from './components/Home.js';
 
 import { HashRouter, Route, Switch, Link } from 'react-router-dom';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
-
-class Hello extends React.Component {
-  render() {
-    return (
-    <div> 
-      hello
-      <Link to="/counter">
-        counter
-      </Link>
-    </div>);
-  }
-}
  
 document.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
@@ -28,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <HashRouter>
         <Switch>
           <Route path="/counter" component={Counter} />
-          <Route path="/" component={Hello} />
+          <Route exact path="/" component={Home} />
         </Switch>
       </HashRouter>
     </ Provider>,
