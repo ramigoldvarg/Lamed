@@ -4,22 +4,23 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './reducers/reducer_root.js';
-import Counter from './containers/counter.js';
-import Home from './components/Home.js';
 
-import { HashRouter, Route, Switch, Link } from 'react-router-dom';
+import Home from './components/Home.js';
+import AddValue from './containers/AddValue.js';
+
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
  
 document.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
     <Provider store={createStoreWithMiddleware(rootReducer)}>
-      <HashRouter>
+      <BrowserRouter>
         <Switch>
-          <Route path="/counter" component={Counter} />
+          <Route path="/AddValue" component={AddValue} />
           <Route exact path="/" component={Home} />
         </Switch>
-      </HashRouter>
+      </BrowserRouter>
     </ Provider>,
     document.getElementById('root')
   );
