@@ -28,7 +28,7 @@ class AddValue extends Component {
     }
 
     handleClick(event) {
-        event.target.name.select();
+        event.target.select();
         document.execCommand("Copy");
     }
 
@@ -40,11 +40,11 @@ class AddValue extends Component {
                 <DropZone onDrop={this.onDrop}>
                     <p>מה עם איזה תמונה?</p>
                 </DropZone>
-                <ul>
+                <span>
                     {
-                        this.state.files.map(file => <li name={file} onClick={this.handleClick} key={file}> {file} </li>)
+                        this.state.files.map(file => <input id="a" value={file} onClick={this.handleClick} key={file} readOnly/>)
                     }
-                </ul>
+                </span>
             </div>
         );
     }
