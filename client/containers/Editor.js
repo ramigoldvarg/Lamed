@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
 
 import '../stylesheets/index.css'
 import '../../TinyMCE/js/tinymce/tinymce.min.js';
@@ -31,19 +30,16 @@ import '../../TinyMCE/js/tinymce/plugins/help/plugin.min.js';
 class Editor extends Component {
     constructor() {
         super();
-
-        this.renderDocumentTextEditor = this.renderDocumentTextEditor.bind(this);
-    }
-
-    addDocument() {
-
     }
 
     componentDidMount() {
         tinymce.init({
             selector: 'textarea',
-            height: 500,
+            height: 150,
+            width: 800,
             menubar: false,
+            branding: false,
+            resize: 'both',
             plugins: [
                 'advlist autolink lists link image charmap print preview anchor textcolor',
                 'searchreplace visualblocks code fullscreen',
@@ -53,28 +49,12 @@ class Editor extends Component {
         });
     }
 
-    renderDocumentTextEditor(field) {
-        return (
-            <textarea>
-                <h1>hi</h1>
-            </textarea>
-        );
-    }
-
     render() {
-        return (
-            <form>
-                <Field
-                    name = "documentText"
-                    component = {this.renderDocumentTextEditor}
-                 />
-
-                <button onClick={this.addDocument}>הוסף!</button>
-            </form>
+       return (
+            <textarea>
+            </textarea>
         );
     }
 }
 
-export default reduxForm({
-    form: 'newDocumentForm'
-})(Editor);
+export default Editor;
