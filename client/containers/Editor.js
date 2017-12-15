@@ -56,6 +56,7 @@ class Editor extends Component {
     renderDocumentTextEditor(field) {
         return (
             <textarea>
+                <h1>hi</h1>
             </textarea>
         );
     }
