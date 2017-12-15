@@ -30,8 +30,8 @@ import '../../TinyMCE/js/tinymce/plugins/help/plugin.min.js';
 
 
 class Editor extends Component {
-    constructor() {
-        super();
+    constructor(content) {
+        super(content);
     }
 
     addDocument(e) {
@@ -47,21 +47,23 @@ class Editor extends Component {
             selector: 'textarea',
             height: 150,
             width: 800,
-            menubar: false,
             branding: false,
+            plugins: "textcolor colorpicker",
+            toolbar: "forecolor backcolor",
             resize: 'both',
+            
             plugins: [
                 'advlist autolink lists link image charmap print preview anchor textcolor',
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table contextmenu paste code help'
             ],
-            toolbar: 'insert | undo redo |  formatselect | bold italic backcolor  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
+            toolbar: 'insert | undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat'
         });
     }
 
     render() {
        return (
-            <textarea>
+            <textarea value = {this.props.content}>
             </textarea>
         );
     }
