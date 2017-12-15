@@ -4,7 +4,6 @@ import Editor from './Editor.js'
 
 import DropZone from 'react-dropzone';
 import axios from 'axios';
-import clipboard from 'clipboard';
 
 import '../stylesheets/index.css'
 

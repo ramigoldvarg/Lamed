@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import axios from 'axios';
 
 import '../stylesheets/index.css'
 import '../../TinyMCE/js/tinymce/tinymce.min.js';
@@ -35,8 +36,12 @@ class Editor extends Component {
         this.renderDocumentTextEditor = this.renderDocumentTextEditor.bind(this);
     }
 
-    addDocument() {
-
+    addDocument(e) {
+        e.preventDefault();
+        let send = {
+            "hello": "<h1>world</h1>"
+        };
+        axios.post('/pages', send);
     }
 
     componentDidMount() {
