@@ -14,8 +14,7 @@ class AddValue extends Component {
         this.state = { files: [] };
         this.onDrop = this.onDrop.bind(this);
         this.handleClick = this.handleClick.bind(this);
-        this.handlePictureClick = this.handlePictureClick.bind(this);
-        this.SelectText = this.SelectText.bind(this);
+        // this.SelectText = this.SelectText.bind(this);
     }
 
     onDrop(files) {
@@ -53,7 +52,7 @@ class AddValue extends Component {
                         this.state.files.map(file => <input value={file} onClick={this.handleClick} key={file} readOnly/>)
                     }
                     {
-                        this.state.files.map(file => <span onClick={this.handlePictureClick} key={file}> <img onClick={this.handlePictureClick} style={{width: "60px", height:"60px"}} src={"http://localhost:3000"+ file}/> </span>)
+                        this.state.files.map(file => <span key={file}> <img style={{width: "60px", height:"60px"}} src={file}/> </span>)
                     }
                 </span>
             </div>
