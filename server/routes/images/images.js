@@ -40,6 +40,10 @@ models.post('/', (req, res) => {
         res.status(500).json({message: "התמונה לא נשמרה בשרת"});
     } else {
         res.status(200).json({message:"תן בראש ותשתמש בתמונות", imageUrls: imageUrls});
+        // // res.sendFile(__dirname + "../../../../images/" + req.files["blured.jpg"].name)
+        // var img = fs.readFileSync(__dirname + "../../../../images/" + req.files["blured.jpg"].name);
+        // res.writeHead(200, {'Content-Type': 'image/jpeg' });
+        // res.end(img, 'binary');
     }
 });
 

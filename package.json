@@ -17,6 +17,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-latest": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "clipboard": "^1.7.1",
     "express": "^4.15.4",
     "express-formidable": "^1.0.0",
     "react": "^15.6.1",
