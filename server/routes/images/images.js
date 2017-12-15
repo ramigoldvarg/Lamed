@@ -9,7 +9,7 @@ models.post('/', (req, res) => {
     for (let currFile in req.files) {
         let imagePath = req.files[currFile].path;
         let imagePathInServer = __dirname + "../../../../images/" + req.files[currFile].name;
-        imageUrls.push('/images/' + req.files[currFile].name);
+        imageUrls.push('localhost:3000/images/' + req.files[currFile].name);
 
         // For saving the image
         const os = fs.createWriteStream(imagePathInServer);

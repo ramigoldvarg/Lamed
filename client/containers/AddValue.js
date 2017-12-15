@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+
+import Editor from './Editor.js'
+
 import DropZone from 'react-dropzone';
 import axios from 'axios';
 import clipboard from 'clipboard';
+
+import '../stylesheets/index.css'
 
 class AddValue extends Component {
     constructor() {
@@ -38,8 +43,8 @@ class AddValue extends Component {
     render() {
         return (
             <div>
-                הוספת ערך חדש
-                <textarea />
+                <h1>הוספת ערך חדש</h1>
+                <Editor />
                 <DropZone onDrop={this.onDrop}>
                     <p>מה עם איזה תמונה?</p>
                 </DropZone>

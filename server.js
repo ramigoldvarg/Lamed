@@ -14,6 +14,7 @@ app.use('/images', express.static(__dirname + '/images'));
 app.use(formidable());
 app.use(bodyParser.json());
 app.use(routes);
+app.use('/tiny', express.static(__dirname + '/TinyMCE'))
 
 app.use(webpackDevMiddleware(compiler, {
   hot: true,

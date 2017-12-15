@@ -7,20 +7,22 @@ import rootReducer from './reducers/reducer_root.js';
 
 import Home from './components/Home.js';
 import AddValue from './containers/AddValue.js';
+import Editor from './containers/Editor.js';
 
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { HashRouter, Route, Switch, Link } from 'react-router-dom';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
  
 document.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
     <Provider store={createStoreWithMiddleware(rootReducer)}>
-      <BrowserRouter>
+      <HashRouter>
         <Switch>
           <Route path="/AddValue" component={AddValue} />
+          <Route path = "/tiny" component={Editor} />
           <Route exact path="/" component={Home} />
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
     </ Provider>,
     document.getElementById('root')
   );
