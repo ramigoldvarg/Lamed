@@ -13,6 +13,9 @@ class Home extends Component {
                 <Link to="/AddValue">
                     +
                 </Link>
+                <Link to="/tiny">
+                    Go To Tiny!
+                </Link>
             </div>
         );
     }
