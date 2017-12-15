@@ -38,22 +38,32 @@ class AddValue extends Component {
         document.execCommand("Copy");
     }
 
+    renderContentAdd() {
+        
+    }
+
     render() {
         return (
-            <div>
+            <div className = "addDocumentBody">
                 <h1>הוספת ערך חדש</h1>
-                <Editor />
-                <DropZone onDrop={this.onDrop}>
-                    <p>מה עם איזה תמונה?</p>
-                </DropZone>
-                <span>
-                    {
-                        this.state.files.map(file => <input value={file} onClick={this.handleClick} key={file} readOnly/>)
-                    }
-                    {
-                        this.state.files.map(file => <span key={file}> <img style={{width: "60px", height:"60px"}} src={file}/> </span>)
-                    }
-                </span>
+                <br/><br/>
+                <div className = "row">
+                    <label className="col-lg-1">בחר הרשאה:</label>
+                    <Editor className = "col-lg-6"/>
+                    <div className="col-lg-2">
+                        <DropZone onDrop={this.onDrop}>
+                            <p>מה עם איזה תמונה?</p>
+                        </DropZone>
+                        <span>
+                            {
+                                this.state.files.map(file => <input value={file} onClick={this.handleClick} key={file} readOnly/>)
+                            }
+                            {
+                                this.state.files.map(file => <span key={file}> <img style={{width: "60px", height:"60px"}} src={file}/> </span>)
+                            }
+                        </span>
+                    </div>
+                </div>
             </div>
         );
     }
