@@ -72,4 +72,18 @@ dbConn.prototype.removeObject = function(objId, callback) {
     });
 }
 
+dbConn.prototype.updateObject = function(objId, whatToUpdate, callback) {
+    mongo.connect(this.URL, (err, db) => {
+        if (err) {
+            throw err;
+        }
+
+        db.collection(this.collection).update({_id: new mongod.ObjectID(objId)}, {$set: whatToUpdate}, function(err,res) {
+            if (err) throw err;
+            callback(objId);
+            db.close();
+        });
+    });
+}
+
 module.exports = dbConn;

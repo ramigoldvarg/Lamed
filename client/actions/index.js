@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const SEARCH_RETURNED = 'SEARCH_RETURNED';
 export const SINGLE_PAGE = 'SINGLE_PAGE';
+export const DELETE_PAGE = 'DELETE_PAGE';
 
 export function searchPage(contentToSearch) {
     const request = axios.get("/pages/search/" + contentToSearch);
@@ -17,6 +18,15 @@ export function getSinglePage(id) {
 
     return ({
         type: SINGLE_PAGE,
+        payload: request
+    });
+}
+
+export function deletePage(id, callback) {
+    const request = axios.delete("/pages/" + id).then(callback);
+
+    return ({
+        type: DELETE_PAGE,
         payload: request
     });
 }
