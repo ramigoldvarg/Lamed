@@ -22,4 +22,10 @@ models.get('/search/:exp', (req, res) => {
     })
 });
 
+models.get('/:id', (req, res)=> {
+    pages.getById(req.params.id, data=> {
+        res.status(200).json(data);
+    })
+})
+
 module.exports = models;

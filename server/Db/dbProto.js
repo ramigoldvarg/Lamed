@@ -37,6 +37,23 @@ dbConn.prototype.getSpecific = function(query, callback) {
     });
 }
 
+dbConn.prototype.getById = function(id, callback) {
+    mongo.connect(this.URL, (err, db) => {
+        if (err) {
+            throw err;
+        }
+
+        db.collection(this.collection).findOne({_id: new mongod.ObjectID(id)}, (err, result) => {
+            if (err) {
+                throw err;
+            }
+
+            callback(result);
+            db.close();
+        });
+    });
+}
+
 dbConn.prototype.getAll= function(callback) {
     this.getSpecific({}, callback);
 }

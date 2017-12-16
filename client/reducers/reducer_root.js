@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import CounterReducer from './reducer_counter.js';
+import PagesReducer from './reducer_pages.js';
+import SinglePageReducer from './reducer_single_page.js';
 
 const rootReducer = combineReducers({
     forn: formReducer,
-    counter: CounterReducer
+    pages: PagesReducer,
+    singlePage: SinglePageReducer
 });
 
 export default rootReducer;
