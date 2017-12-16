@@ -28,4 +28,16 @@ models.get('/:id', (req, res)=> {
     })
 })
 
+models.delete('/:id', (req, res) => {
+    pages.removeObject(req.params.id, data=> {
+        res.status(200).json(data);
+    })
+})
+
+models.put('/:id', (req, res) => {
+    pages.updateObject(req.params.id, req.fields, (data)=> {
+        res.status(200).json(data);
+    })
+})
+
 module.exports = models;

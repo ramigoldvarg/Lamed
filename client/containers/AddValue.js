@@ -95,8 +95,13 @@ class AddValue extends Component {
                 {
                     this.state.hashtags.map((currHashtag, currIndex) => {
                         return (
+<<<<<<< HEAD
                             <div key={currIndex}>
                                 <input onClick = {this.hashTagClicked} type="checkbox" value={currHashtag} />
+=======
+                            <div key={currHashtag}>
+                                <input type="checkbox" value={currHashtag} />
+>>>>>>> b43dbc05591ad13e0d13eb455d2bf1d3fa6d8a4f
                                 {currHashtag}
                             </div>
                         )
