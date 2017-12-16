@@ -11,13 +11,21 @@ class AddValue extends Component {
         super();
         this.state = { 
             files: [],
-            contents: [""]
+            contents: [""],
+            hashtags: [
+                'עת"פ',
+                'תר"צ',
+                'שלום',
+                'רובוקופ',
+                'יוניק',
+                
+            ]
         };
         this.onDrop = this.onDrop.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.renderContentAdd = this.renderContentAdd.bind(this);
         this.addContent = this.addContent.bind(this);
-        // this.SelectText = this.SelectText.bind(this);
+        this.renderHashtags = this.renderHashtags.bind(this);
     }
 
     onDrop(files) {
@@ -69,6 +77,28 @@ class AddValue extends Component {
         }
     }
 
+    renderHashtags() {
+        return (
+            <div>
+                <label>בחר האשטגים:</label>
+                {
+                    this.state.hashtags.map(currHashtag => {
+                        return (
+                            <div>
+                                <input key={currHashtag} type="checkbox" value={currHashtag} />
+                                {currHashtag}
+                            </div>
+                        )
+                    })
+                }
+            </div>
+        )
+    }
+
+    addDocument() {
+        console.log("call action creator");
+    }
+
     render() {
         return (
             <div className = "addDocumentBody">
@@ -77,32 +107,36 @@ class AddValue extends Component {
                 {
                     this.renderContentAdd()    
                 }
+                
                 <br/>
                 <div>
                     <button className = "col-lg-2" onClick = {this.addContent}>הוסף תוכן נוסף!</button>
                 </div>
+                <div>
+                    <DropZone onDrop={this.onDrop}>
+                        <p>מה עם איזה תמונה?</p>
+                    </DropZone>
+                    <span>
+                        {
+                            this.state.files.map(file => <input value={file} onClick={this.handleClick} key={file} readOnly/>)
+                        }
+                        {
+                            this.state.files.map(file => <span key={file}> <img style={{width: "60px", height:"60px"}} src={file}/> </span>)
+                        }
+                    </span>
+                </div>
                 <br/><br/>
                 <div>
-                    <label>האשטגים:</label>
-                    <input type="checkbox" />
+                    {
+                        this.renderHashtags()    
+                    }
                 </div>
-
+                <br/><br/>
+                <button onClick = {this.addDocument}>הוסף מסמך!</button>
                 <br/><br/>
                 <br/><br/>
                 <br/><br/>
                 <br/><br/>
-
-                <DropZone onDrop={this.onDrop}>
-                    <p>מה עם איזה תמונה?</p>
-                </DropZone>
-                <span>
-                    {
-                        this.state.files.map(file => <input value={file} onClick={this.handleClick} key={file} readOnly/>)
-                    }
-                    {
-                        this.state.files.map(file => <span key={file}> <img style={{width: "60px", height:"60px"}} src={file}/> </span>)
-                    }
-                </span>
             </div>
         );
     }
