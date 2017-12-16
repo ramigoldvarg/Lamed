@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import SearchContent from './SearchContent.js';
 
 class Home extends Component {
     constructor() {
@@ -16,6 +17,8 @@ class Home extends Component {
                 <Link to="/tiny">
                     Go To Tiny!
                 </Link>
+                <br />
+                <SearchContent />
             </div>
         );
     }
