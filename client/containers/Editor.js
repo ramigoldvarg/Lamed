@@ -30,8 +30,8 @@ import '../../TinyMCE/js/tinymce/plugins/help/plugin.min.js';
 
 
 class Editor extends Component {
-    constructor(content) {
-        super(content);
+    constructor() {
+        super();
     }
 
     addDocument(e) {
@@ -51,7 +51,6 @@ class Editor extends Component {
             plugins: "textcolor colorpicker",
             toolbar: "forecolor backcolor",
             resize: 'both',
-            
             plugins: [
                 'advlist autolink lists link image charmap print preview anchor textcolor',
                 'searchreplace visualblocks code fullscreen',
@@ -63,7 +62,7 @@ class Editor extends Component {
 
     render() {
        return (
-            <textarea value = {this.props.content}>
+            <textarea>
             </textarea>
         );
     }

@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import DropZone from 'react-dropzone';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {addPage} from '../actions/index.js';
 
 import SingleContent from './SingleContent.js';
-
 import '../stylesheets/index.css'
 
 class AddValue extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = { 
             files: [],
             contents: [""],
@@ -21,11 +23,13 @@ class AddValue extends Component {
                 
             ]
         };
+
         this.onDrop = this.onDrop.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.renderContentAdd = this.renderContentAdd.bind(this);
         this.addContent = this.addContent.bind(this);
         this.renderHashtags = this.renderHashtags.bind(this);
+        this.hashtagClicked = this.hashtagClicked.bind(this);
     }
 
     onDrop(files) {
@@ -50,28 +54,35 @@ class AddValue extends Component {
         document.execCommand("Copy");
     }
 
+    hashtagClicked(e) {
+        cosnole.log("hashteg clicked");
+    }
+
     addContent() {
         let newContentes = this.state.contents.slice();
         newContentes.push("");
         this.setState({
             contents: newContentes
         });
+    }
 
-        console.log(newContentes);
+    addDocument() {
+        console.log(tinyMCE.activeEditor.getContent());
+        // this.props.addPage(tinyMCE.activeEditor.getContent());
     }
 
     renderContentAdd() {
         if (this.state.contents.length == 0) {
             return (
                 <div>
-                    <SingleContent content = "" />
+                    <SingleContent />
                 </div>
             );
         }
         else {
             return this.state.contents.map((currContent, currIndex) => {
                 return (
-                    <SingleContent key = {currIndex} content = {currContent} />
+                    <SingleContent key = {currIndex} />
                 );
             });
         }
@@ -82,10 +93,10 @@ class AddValue extends Component {
             <div>
                 <label>בחר האשטגים:</label>
                 {
-                    this.state.hashtags.map(currHashtag => {
+                    this.state.hashtags.map((currHashtag, currIndex) => {
                         return (
-                            <div>
-                                <input key={currHashtag} type="checkbox" value={currHashtag} />
+                            <div key={currIndex}>
+                                <input onClick = {this.hashTagClicked} type="checkbox" value={currHashtag} />
                                 {currHashtag}
                             </div>
                         )
@@ -93,10 +104,6 @@ class AddValue extends Component {
                 }
             </div>
         )
-    }
-
-    addDocument() {
-        console.log("call action creator");
     }
 
     render() {
@@ -133,13 +140,13 @@ class AddValue extends Component {
                 </div>
                 <br/><br/>
                 <button onClick = {this.addDocument}>הוסף מסמך!</button>
-                <br/><br/>
-                <br/><br/>
-                <br/><br/>
-                <br/><br/>
             </div>
         );
     }
 }
 
-export default AddValue;
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({addPage}, dispatch); 
+}
+
+export default connect(null, mapDispatchToProps)(AddValue);

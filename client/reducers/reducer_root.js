@@ -4,7 +4,7 @@ import PagesReducer from './reducer_pages.js';
 import SinglePageReducer from './reducer_single_page.js';
 
 const rootReducer = combineReducers({
-    forn: formReducer,
+    form: formReducer,
     pages: PagesReducer,
     singlePage: SinglePageReducer
 });
