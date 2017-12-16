@@ -8,6 +8,18 @@ models.post('/', (req, res) => {
     pages.addNewObject(req.fields, (data) => {
         res.status(200).json(data);
     });
-})
+});
+
+models.get('/', (req, res) => {
+    pages.getAll((data) => {
+        res.status(200).json(data);
+    });
+});
+
+models.get('/search/:exp', (req, res) => {
+    pages.getSpecific({name:{$regex:"(" + req.params.exp + "){1}"}}, (data) => {
+        res.status(200).json(data);
+    })
+});
 
 module.exports = models;

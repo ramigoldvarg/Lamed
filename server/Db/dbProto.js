@@ -20,13 +20,13 @@ dbConn.prototype.addNewObject = function(objectToAdd, callback) {
     });
 }
 
-dbConn.prototype.getAll= function(callback) {
+dbConn.prototype.getSpecific = function(query, callback) {
     mongo.connect(this.URL, (err, db) => {
         if (err) {
             throw err;
         }
 
-        db.collection(this.collection).find({}).toArray((err, result) => {
+        db.collection(this.collection).find(query).toArray((err, result) => {
             if (err) {
                 throw err;
             }
@@ -35,6 +35,10 @@ dbConn.prototype.getAll= function(callback) {
             db.close();
         });
     });
+}
+
+dbConn.prototype.getAll= function(callback) {
+    this.getSpecific({}, callback);
 }
 
 dbConn.prototype.removeObject = function(objId, callback) {
