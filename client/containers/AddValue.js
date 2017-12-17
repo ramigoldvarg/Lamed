@@ -4,8 +4,10 @@ import DropZone from 'react-dropzone';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {addPage} from '../actions/index.js';
-
+import {hashtags} from '../globals.js';
+import {permissions} from '../globals.js'
 import SingleContent from './SingleContent.js';
+
 import '../stylesheets/index.css'
 
 class AddValue extends Component {
@@ -13,15 +15,10 @@ class AddValue extends Component {
         super(props);
         this.state = { 
             files: [],
-            contents: [""],
-            hashtags: [
-                'עת"פ',
-                'תר"צ',
-                'שלום',
-                'רובוקופ',
-                'יוניק',
-                
-            ]
+            documentName: "",
+            contents: [],
+            chosenHashtags: [],
+            lastPermission: permissions[0]
         };
 
         this.onDrop = this.onDrop.bind(this);
@@ -30,6 +27,9 @@ class AddValue extends Component {
         this.addContent = this.addContent.bind(this);
         this.renderHashtags = this.renderHashtags.bind(this);
         this.hashtagClicked = this.hashtagClicked.bind(this);
+        this.handleDocumentNameChange = this.handleDocumentNameChange.bind(this);
+        this.addDocument = this.addDocument.bind(this);
+        this.handleLastPermissionChange = this.handleLastPermissionChange.bind(this);
     }
 
     onDrop(files) {
@@ -54,38 +54,68 @@ class AddValue extends Component {
         document.execCommand("Copy");
     }
 
+    handleDocumentNameChange(e) {
+        this.setState({
+            documentName: e.target.value
+        });
+    }
+
     hashtagClicked(e) {
-        cosnole.log("hashteg clicked");
+        let newChosenHashtags = this.state.chosenHashtags.slice();
+        if(e.target.checked) {
+            newChosenHashtags.push(e.target.value);
+        } else {
+            newChosenHashtags.splice(newChosenHashtags.indexOf(e.target.value), 1);
+        }
+
+        this.setState({
+            chosenHashtags: newChosenHashtags
+        });
     }
 
     addContent() {
-        let newContentes = this.state.contents.slice();
-        newContentes.push("");
+        const newContents = this.state.contents.slice();
+        const newestContent = { 
+            content: tinyMCE.activeEditor.getContent(),
+            permission: this.state.lastPermission
+        };
+
+        newContents.push(newestContent);
         this.setState({
-            contents: newContentes
+            contents: newContents,
+            lastPermission: permissions[0]
         });
     }
 
     addDocument() {
-        console.log(tinyMCE.activeEditor.getContent());
-        // this.props.addPage(tinyMCE.activeEditor.getContent());
+        const newContents = this.state.contents.slice();
+         const newestContent = { 
+            content: tinyMCE.activeEditor.getContent(),
+            permission: this.state.lastPermission
+        };
+        newContents.push(newestContent);
+
+        const documentToAdd = {
+            name: this.state.documentName,
+            contents: newContents,
+            hashtags: this.state.chosenHashtags
+        }
+        
+        this.props.addPage(documentToAdd);
+    }
+
+    handleLastPermissionChange(permission) {
+        this.setState({
+            lastPermission: permission
+        })
     }
 
     renderContentAdd() {
-        if (this.state.contents.length == 0) {
+        return this.state.contents.map((currContent, currIndex) => {
             return (
-                <div>
-                    <SingleContent />
-                </div>
+                 <SingleContent key = {currIndex} onPermissionChange = {this.handleLastPermissionChange} />
             );
-        }
-        else {
-            return this.state.contents.map((currContent, currIndex) => {
-                return (
-                    <SingleContent key = {currIndex} />
-                );
-            });
-        }
+        });
     }
 
     renderHashtags() {
@@ -93,10 +123,11 @@ class AddValue extends Component {
             <div>
                 <label>בחר האשטגים:</label>
                 {
-                    this.state.hashtags.map((currHashtag, currIndex) => {
+                    hashtags.map((currHashtag, currIndex) => {
                         return (
                             <div key={currIndex}>
-                                <input onClick = {this.hashTagClicked} type="checkbox" value={currHashtag} />
+                                <input onClick = {this.hashtagClicked} type="checkbox" value={currHashtag} />
+                                {currHashtag}
                             </div>
                         )
                     })
@@ -107,13 +138,18 @@ class AddValue extends Component {
 
     render() {
         return (
-            <div className = "addDocumentBody">
+            <div className = "addDocumentBody container">
                 <h1>הוספת ערך חדש</h1>
                 <br/><br/>
-                {
-                    this.renderContentAdd()    
-                }
-                
+                <label>שם המסמך:</label>
+                <input type="text" onChange={this.handleDocumentNameChange} />
+                <br/>
+                <div>
+                    <SingleContent onPermissionChange = {this.handleLastPermissionChange} />
+                    {
+                        this.renderContentAdd()    
+                    }
+                </div>
                 <br/>
                 <div>
                     <button className = "col-lg-2" onClick = {this.addContent}>הוסף תוכן נוסף!</button>

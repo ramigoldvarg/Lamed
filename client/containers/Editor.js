@@ -46,7 +46,7 @@ class Editor extends Component {
         tinymce.init({
             selector: 'textarea',
             height: 150,
-            width: 800,
+            width: 1050,
             branding: false,
             plugins: "textcolor colorpicker",
             toolbar: "forecolor backcolor",
