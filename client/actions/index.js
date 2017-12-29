@@ -23,8 +23,8 @@ export function getSinglePage(id) {
     });
 }
 
-export function addPage(data) {
-    const request = axios.post("/pages", data);
+export function addPage(data, callback) {
+    const request = axios.post("/pages", data).then(callback);
 
     return ({
         type: ADDED_NEW_PAGE,

@@ -10,7 +10,7 @@ import SingleContent from './SingleContent.js';
 
 import '../stylesheets/index.css'
 
-class AddValue extends Component {
+class EditDocument extends Component {
     constructor(props) {
         super(props);
         this.state = { 
@@ -18,7 +18,8 @@ class AddValue extends Component {
             documentName: "",
             contents: [],
             chosenHashtags: [],
-            lastPermission: permissions[0]
+            lastPermission: permissions[0],
+            name: this.props.name
         };
 
         this.onDrop = this.onDrop.bind(this);
@@ -144,7 +145,7 @@ class AddValue extends Component {
                 <h1>הוספת ערך חדש</h1>
                 <br/><br/>
                 <label>שם המסמך:</label>
-                <input type="text" onChange={this.handleDocumentNameChange} />
+                <input type="text" value = {this.state.name} disabled />
                 <br/>
                 <div>
                     <SingleContent onPermissionChange = {this.handleLastPermissionChange} />
@@ -186,4 +187,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({addPage}, dispatch); 
 }
 
-export default connect(null, mapDispatchToProps)(AddValue);
+export default connect(null, mapDispatchToProps)(EditDocument);

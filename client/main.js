@@ -12,6 +12,7 @@ import Editor from './containers/Editor.js';
 import Page from './containers/Page.js'
 
 import { HashRouter, Route, Switch, Link } from 'react-router-dom';
+import EditDocument from './containers/EditDocument';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
  
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <Route path="/AddValue" component={AddValue} />
           <Route path = "/tiny" component={Editor} />
           <Route path="/pages/:id" component={Page} />
+          <Route path = "/pages/edit/:id" component={EditDocument} />
           <Route exact path="/" component={Home} />
         </Switch>
       </HashRouter>

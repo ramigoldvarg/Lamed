@@ -48,13 +48,12 @@ class Editor extends Component {
             height: 150,
             width: 1050,
             branding: false,
-            plugins: "textcolor colorpicker",
             toolbar: "forecolor backcolor",
             resize: 'both',
             plugins: [
-                'advlist autolink lists link image charmap print preview anchor textcolor',
+                'advlist autolink lists link image charmap print preview anchor textcolor colorpicker',
                 'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table contextmenu paste code help'
+                'inser-tdatetime media table contextmenu paste code help'
             ],
             toolbar: 'insert | undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat'
         });

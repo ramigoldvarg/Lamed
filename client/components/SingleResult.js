@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import EditDocument from '../containers/EditDocument';
 
 class SingleResult extends Component {
     constructor(props) {
@@ -12,9 +13,9 @@ class SingleResult extends Component {
             <Link to={"/pages/" + this.props.page._id}>
                 {this.props.page.name}
             </Link>
-            <div>
-                Lorem ipsum
-            </div>
+            <Link to = {"/pages/edit/" + this.props.page._id}>
+                Edit {this.props.page.name}
+            </Link>
         </div>);
     }
 }
