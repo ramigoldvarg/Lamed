@@ -50,7 +50,14 @@ class AddValue extends Component {
 
         // Shows the images that were added
         request.then(result => {
-            this.setState({files: result.data.imageUrls});
+            let updatedContentWithImages = tinyMCE.activeEditor.getContent();
+
+            // Adds the images to the current editor
+            updatedContentWithImages = result.data.imageUrls.reduce((acu,curr)=>acu + "<img src='" + curr + "'/>", updatedContentWithImages);
+
+            // Set the content of the editor
+            tinyMCE.activeEditor.setContent(updatedContentWithImages);
+            // this.setState({files: result.data.imageUrls});
         })
     }
 
