@@ -2,6 +2,9 @@ var models = require('express').Router();
 const images = require('../images/images.js');
 const pages = require('../../Db/page.js');
 
+/**
+ * Adds the image to the pages api
+ */
 models.use("/images", images);
 
 models.post('/', (req, res) => {

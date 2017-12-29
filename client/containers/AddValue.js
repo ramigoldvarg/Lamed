@@ -32,9 +32,12 @@ class AddValue extends Component {
         this.handleLastPermissionChange = this.handleLastPermissionChange.bind(this);
     }
 
+    // Handles the drop event on the dropzone.
     onDrop(files) {
         let data = new FormData();
         
+        // Goes through every single file that was chosen and adds it to the data
+        // that will be sent
         files.map(file=> {
             data.append(file.name, file, file.name);
         });
@@ -44,6 +47,8 @@ class AddValue extends Component {
         }
 
         const request = axios.post('/pages/images', data, config);
+
+        // Shows the images that were added
         request.then(result => {
             this.setState({files: result.data.imageUrls});
         })

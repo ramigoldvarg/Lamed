@@ -1,6 +1,10 @@
 var models = require('express').Router();
 const fs = require('fs');
 
+/**
+ * Saves the images to the server and returns the image urls. Can save more than one
+ * image at a time
+ */
 models.post('/', (req, res) => {
     let didErrorOcurred = false;
     let imageUrls = [];

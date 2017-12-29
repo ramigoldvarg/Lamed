@@ -6,6 +6,7 @@ function dbConn(collectionName)  {
     this.collection = collectionName;
 }
 
+// Adds a new object to the DB and calls the callback with the added object
 dbConn.prototype.addNewObject = function(objectToAdd, callback) {
     mongo.connect(this.URL, (err, db) => {
         if (err) {
@@ -20,6 +21,11 @@ dbConn.prototype.addNewObject = function(objectToAdd, callback) {
     });
 }
 
+ /**
+  * Finds a specific items in the collection
+  * @param {Json} query The query to find the needed items
+  * @param {fn} callback The callback that will manipulate the items found
+  */
 dbConn.prototype.getSpecific = function(query, callback) {
     mongo.connect(this.URL, (err, db) => {
         if (err) {
@@ -37,6 +43,11 @@ dbConn.prototype.getSpecific = function(query, callback) {
     });
 }
 
+/**
+ * Gets the specific item with the given id
+ * @param {string} id The id of the wanted item
+ * @param {fn} callback The callback that manipulates the given item
+ */
 dbConn.prototype.getById = function(id, callback) {
     mongo.connect(this.URL, (err, db) => {
         if (err) {
@@ -54,10 +65,19 @@ dbConn.prototype.getById = function(id, callback) {
     });
 }
 
+/**
+ * Finds all the items in the collection
+ * @param {fn} callback The callback that manipualtes the data
+ */
 dbConn.prototype.getAll= function(callback) {
     this.getSpecific({}, callback);
 }
 
+/**
+ * Remove the given object from the 
+ * @param {string} objId Id of the object to remove
+ * @param {fn} callback Returns the id of the deleted object
+ */
 dbConn.prototype.removeObject = function(objId, callback) {
     mongo.connect(this.URL, (err, db) => {
         if (err) {
@@ -72,6 +92,12 @@ dbConn.prototype.removeObject = function(objId, callback) {
     });
 }
 
+/**
+ * Updates a given object
+ * @param {string} objId Id of the object ot update
+ * @param {json} whatToUpdate The updates wanted in a fokrm of json
+ * @param {fn} callback Returns the id of the updated object
+ */
 dbConn.prototype.updateObject = function(objId, whatToUpdate, callback) {
     mongo.connect(this.URL, (err, db) => {
         if (err) {
