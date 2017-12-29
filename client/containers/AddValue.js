@@ -46,18 +46,18 @@ class AddValue extends Component {
             headers: { 'content-type': 'multipart/form-data' }
         }
 
+        // Uploading the pictures to the server
         const request = axios.post('/pages/images', data, config);
 
         // Shows the images that were added
         request.then(result => {
             let updatedContentWithImages = tinyMCE.activeEditor.getContent();
 
-            // Adds the images to the current editor
-            updatedContentWithImages = result.data.imageUrls.reduce((acu,curr)=>acu + "<img src='" + curr + "'/>", updatedContentWithImages);
+            // Adds the images to the current text with fixed size
+            updatedContentWithImages = result.data.imageUrls.reduce((acu,curr)=>acu + "<img src='" + curr + "' height='200' width='200'/>", updatedContentWithImages);
 
             // Set the content of the editor
             tinyMCE.activeEditor.setContent(updatedContentWithImages);
-            // this.setState({files: result.data.imageUrls});
         })
     }
 

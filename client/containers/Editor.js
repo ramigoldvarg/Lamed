@@ -27,6 +27,7 @@ import '../../TinyMCE/js/tinymce/plugins/table/plugin.min.js';
 import '../../TinyMCE/js/tinymce/plugins/contextmenu/plugin.min.js';
 import '../../TinyMCE/js/tinymce/plugins/paste/plugin.min.js';
 import '../../TinyMCE/js/tinymce/plugins/help/plugin.min.js';
+import '../../TinyMCE/js/tinymce/plugins/dropfile/plugin.min.js'
 
 
 class Editor extends Component {
@@ -45,17 +46,51 @@ class Editor extends Component {
     componentDidMount() {
         tinymce.init({
             selector: 'textarea',
+            init_instance_callback: function (editor) {
+                // Dealing with dropping pictures
+                editor.on('DragOver', e=> e.preventDefault());
+                // Dealing with the droping content
+                editor.on('Drop', function(event) {
+                    event.preventDefault();
+                    let data = new FormData();
+                    const files = event.dataTransfer.files;
+                    
+                    // Goes through every single file that was chosen and adds it to the data
+                    // that will be sent
+                    for (let file in files) {
+                        data.append(files[file].name, files[file], files[file].name);
+                    }
+            
+                    const config = {
+                        headers: { 'content-type': 'multipart/form-data' }
+                    }
+            
+                    // Uploading the pictures to the server
+                    const request = axios.post('/pages/images', data, config);
+            
+                    // Shows the images that were added
+                    request.then(result => {
+                        let updatedContentWithImages = tinyMCE.activeEditor.getContent();
+            
+                        // Adds the images to the current text with fixed size
+                        updatedContentWithImages = result.data.imageUrls.reduce((acu,curr)=>acu + "<img src='" + curr + "' height='200' width='200'/>", updatedContentWithImages);
+            
+                        // Set the content of the editor
+                        tinyMCE.activeEditor.setContent(updatedContentWithImages);
+                    })
+                });
+            },
             height: 150,
             width: 1050,
             branding: false,
             toolbar: "forecolor backcolor",
             resize: 'both',
             plugins: [
-                'advlist autolink lists link image charmap print preview anchor textcolor colorpicker',
+                'advlist autolink lists link example image charmap print preview anchor textcolor colorpicker',
                 'searchreplace visualblocks code fullscreen',
-                'inser-tdatetime media table contextmenu paste code help'
+                'inser-tdatetime media table contextmenu paste code help',
             ],
-            toolbar: 'insert | undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat'
+            toolbar: 'example | insert | undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat'
         });
     }
 
