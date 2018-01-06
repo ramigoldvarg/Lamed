@@ -11,7 +11,7 @@ class Home extends Component {
         return (
             <div>
                 <h1>למד</h1>
-                <Link to="/AddValue">
+                <Link to="/AddDocument">
                     +
                 </Link>
                 <Link to="/tiny">

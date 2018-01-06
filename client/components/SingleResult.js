@@ -13,7 +13,7 @@ class SingleResult extends Component {
             <Link to={"/pages/" + this.props.page._id}>
                 {this.props.page.name}
             </Link>
-            <Link to = {"/pages/edit/" + this.props.page._id}>
+            <Link to = {"/pages/" + this.props.page._id+"/edit"}>
                 Edit {this.props.page.name}
             </Link>
         </div>);

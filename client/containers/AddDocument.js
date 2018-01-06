@@ -7,10 +7,11 @@ import {addPage} from '../actions/index.js';
 import {hashtags} from '../globals.js';
 import {permissions} from '../globals.js'
 import SingleContent from './SingleContent.js';
+import { Link } from 'react-router-dom';
 
 import '../stylesheets/index.css'
 
-class AddValue extends Component {
+class AddDocument extends Component {
     constructor(props) {
         super(props);
         this.state = { 
@@ -127,7 +128,7 @@ class AddValue extends Component {
     renderContentAdd() {
         return this.state.contents.map((currContent, currIndex) => {
             return (
-                 <SingleContent key = {currIndex} onPermissionChange = {this.handleLastPermissionChange} />
+                 <SingleContent passedId={new Date().getTime() + currIndex + 1} key = {currIndex} content={currContent} onPermissionChange = {this.handleLastPermissionChange} />
             );
         });
     }
@@ -153,13 +154,16 @@ class AddValue extends Component {
     render() {
         return (
             <div className = "addDocumentBody container">
+                <Link to="/">
+                    חזור לדף בית
+                </Link>
                 <h1>הוספת ערך חדש</h1>
                 <br/><br/>
                 <label>שם המסמך:</label>
                 <input type="text" onChange={this.handleDocumentNameChange} />
                 <br/>
                 <div>
-                    <SingleContent onPermissionChange = {this.handleLastPermissionChange} />
+                    <SingleContent passedId={new Date().getTime()} content={{permission: undefined}} onPermissionChange = {this.handleLastPermissionChange} />
                     {
                         this.renderContentAdd()    
                     }
@@ -198,4 +202,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({addPage}, dispatch); 
 }
 
-export default connect(null, mapDispatchToProps)(AddValue);
+export default connect(null, mapDispatchToProps)(AddDocument);

@@ -2,11 +2,13 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getSinglePage, deletePage} from '../actions/index.js';
 import {bindActionCreators} from 'redux';
+import { Link } from 'react-router-dom';
 
 class Page extends Component {
     constructor(props) {
         super(props);
         this.handleDelete = this.handleDelete.bind(this);
+        this.renderContents = this.renderContents.bind(this);
     }
 
     componentDidMount() {
@@ -19,6 +21,16 @@ class Page extends Component {
         });
     }
 
+    renderContents() {
+        return this.props.singlePage.contents.map(curr=> (
+            <div key={curr.permission}>
+                <h3>{curr.permission}</h3>
+                <div dangerouslySetInnerHTML={{__html:curr.content}}>
+                </div>
+            </div>
+        ));
+    }
+
     render() {
         if (!this.props.singlePage) {
             return <h3> טוען</h3>;
@@ -26,13 +38,14 @@ class Page extends Component {
 
         return (
             <div>
+                <Link to="/">
+                    חזור לדף בית
+                </Link>
                 <div>
                     <h2> {this.props.singlePage.name} </h2>
                 </div>
-                <div>
-                    Lorem ipsum
-                </div>
                 <button onClick={this.handleDelete}> X </button>
+                {this.renderContents()}
             </div>
         )
     }

@@ -45,7 +45,8 @@ class Editor extends Component {
 
     componentDidMount() {
         tinymce.init({
-            selector: 'textarea',
+            selector : `#text${this.props.passedId}`,
+            mode: "exact",
             init_instance_callback: function (editor) {
                 // Dealing with dropping pictures
                 editor.on('DragOver', e=> e.preventDefault());
@@ -70,6 +71,13 @@ class Editor extends Component {
             
                     // Shows the images that were added
                     request.then(result => {
+                        // /In case there is a need to define the sizeof pictures
+                        // tinyMCE.activeEditor.windowManager.open({
+                        //     width:500,
+                        //     height:230,
+
+                        // })
+
                         let updatedContentWithImages = tinyMCE.activeEditor.getContent();
             
                         // Adds the images to the current text with fixed size
@@ -79,6 +87,10 @@ class Editor extends Component {
                         tinyMCE.activeEditor.setContent(updatedContentWithImages);
                     })
                 });
+
+                // editor.on("NodeChange", function(e) {
+                //     console.log("change");
+                // })
             },
             height: 150,
             width: 1050,
@@ -96,7 +108,7 @@ class Editor extends Component {
 
     render() {
        return (
-            <textarea>
+            <textarea id={`text${this.props.passedId}`} defaultValue={this.props.content}>
             </textarea>
         );
     }

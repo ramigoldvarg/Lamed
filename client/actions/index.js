@@ -4,6 +4,7 @@ export const SEARCH_RETURNED = 'SEARCH_RETURNED';
 export const SINGLE_PAGE = 'SINGLE_PAGE';
 export const ADDED_NEW_PAGE = 'ADDED_NEW_PAGE';
 export const DELETE_PAGE = 'DELETE_PAGE';
+export const UPDATE_DOCUMENT = 'UPDATE_DOCUMENT';
 
 export function searchPage(contentToSearch) {
     const request = axios.get("/pages/search/" + contentToSearch);
@@ -30,6 +31,15 @@ export function addPage(data, callback) {
         type: ADDED_NEW_PAGE,
         payload: request
     });
+}
+
+export function editPage(id, data, callback) {
+    const request = axios.put("/pages/" + id, data).then(callback);
+
+    return ({
+        type: UPDATE_DOCUMENT,
+        payload: reaquest
+    })
 }
 
 export function deletePage(id, callback) {

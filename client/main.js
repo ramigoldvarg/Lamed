@@ -7,7 +7,7 @@ import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './reducers/reducer_root.js';
 
 import Home from './components/Home.js';
-import AddValue from './containers/AddValue.js';
+import AddDocument from './containers/AddDocument.js';
 import Editor from './containers/Editor.js';
 import Page from './containers/Page.js'
 
@@ -21,10 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
     <Provider store={createStoreWithMiddleware(rootReducer)}>
       <HashRouter>
         <Switch>
-          <Route path="/AddValue" component={AddValue} />
+          <Route path="/AddDocument" component={AddDocument} />
           <Route path = "/tiny" component={Editor} />
+          <Route path = "/pages/:id/edit" component={EditDocument} />
           <Route path="/pages/:id" component={Page} />
-          <Route path = "/pages/edit/:id" component={EditDocument} />
           <Route exact path="/" component={Home} />
         </Switch>
       </HashRouter>
