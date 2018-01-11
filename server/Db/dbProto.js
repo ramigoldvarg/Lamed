@@ -86,7 +86,7 @@ dbConn.prototype.removeObject = function(objId, callback) {
 
         db.collection(this.collection).remove({_id: new mongod.ObjectID(objId)}, function(err,res) {
             if (err) throw err;
-            callback(objId);
+            callback({id: objId});
             db.close();
         });
     });
@@ -106,7 +106,7 @@ dbConn.prototype.updateObject = function(objId, whatToUpdate, callback) {
 
         db.collection(this.collection).update({_id: new mongod.ObjectID(objId)}, {$set: whatToUpdate}, function(err,res) {
             if (err) throw err;
-            callback(objId);
+            callback({id:objId});
             db.close();
         });
     });

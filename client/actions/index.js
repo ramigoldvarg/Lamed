@@ -38,7 +38,7 @@ export function editPage(id, data, callback) {
 
     return ({
         type: UPDATE_DOCUMENT,
-        payload: reaquest
+        payload: request
     })
 }
 

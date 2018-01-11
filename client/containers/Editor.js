@@ -27,12 +27,15 @@ import '../../TinyMCE/js/tinymce/plugins/table/plugin.min.js';
 import '../../TinyMCE/js/tinymce/plugins/contextmenu/plugin.min.js';
 import '../../TinyMCE/js/tinymce/plugins/paste/plugin.min.js';
 import '../../TinyMCE/js/tinymce/plugins/help/plugin.min.js';
-import '../../TinyMCE/js/tinymce/plugins/dropfile/plugin.min.js'
+import '../../TinyMCE/js/tinymce/plugins/dropfile/plugin.min.js';
+import '../../TinyMCE/js/tinymce/langs/he_IL.js';
 
 
 class Editor extends Component {
     constructor() {
         super();
+
+        this.state = {editor: null}
     }
 
     addDocument(e) {
@@ -43,11 +46,17 @@ class Editor extends Component {
         axios.post('/pages', send);
     }
 
+    componentWillUnmount() {
+        tinymce.remove(this.state.editor);
+      }
+
     componentDidMount() {
         tinymce.init({
             selector : `#text${this.props.passedId}`,
             mode: "exact",
             init_instance_callback: function (editor) {
+                // this.setState({editor})
+
                 // Dealing with dropping pictures
                 editor.on('DragOver', e=> e.preventDefault());
                 // Dealing with the droping content
@@ -97,12 +106,14 @@ class Editor extends Component {
             branding: false,
             toolbar: "forecolor backcolor",
             resize: 'both',
+            directionality : 'rtl',
+            language: 'he_IL',
             plugins: [
-                'advlist autolink lists link example image charmap print preview anchor textcolor colorpicker',
+                'advlist autolink lists link example image charmap print preview anchor textcolor',
                 'searchreplace visualblocks code fullscreen',
-                'inser-tdatetime media table contextmenu paste code help',
+                'media table contextmenu paste code help',
             ],
-            toolbar: 'example | insert | undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat'
+            toolbar: '  example | insert | undo redo | formatselect | bold italic backcolor forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat'
         });
     }
 

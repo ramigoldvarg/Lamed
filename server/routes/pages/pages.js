@@ -38,7 +38,7 @@ models.delete('/:id', (req, res) => {
 })
 
 models.put('/:id', (req, res) => {
-    pages.updateObject(req.params.id, req.fields, (data)=> {
+    pages.updateObject(req.params.id, {contents:req.fields.contents}, (data)=> {
         res.status(200).json(data);
     })
 })

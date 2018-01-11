@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {editPage, getSinglePage} from '../actions/index.js';
 import SingleContent from './SingleContent.js';
 import Editor from './Editor.js';
+import {Link} from 'react-router-dom';
 
 import '../stylesheets/index.css'
 
@@ -12,6 +13,7 @@ class EditDocument extends Component {
     constructor(props) {
         super(props);
         this.renderContents = this.renderContents.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
     }
 
     componentDidMount() {
@@ -23,7 +25,14 @@ class EditDocument extends Component {
     }
 
     handleUpdate() {
+        let contentsToSend = this.contents.map(element => {
+            element.content = tinymce.editors.find(curr => curr.id == `text${element.id}`).getContent();
+            return element;
+        });
 
+        this.props.editPage(this.props.match.params.id, {contents: contentsToSend}, (data) =>{
+            this.props.history.push("/pages/" + data.data.id);
+        })
     }
 
     render() {
@@ -42,6 +51,7 @@ class EditDocument extends Component {
         <div>
             <Link to="/"> חזור לדף בית</Link>
             {this.renderContents()}
+            <button onClick={this.handleUpdate}>עדכן</button>
         </div>);
     }
 }
