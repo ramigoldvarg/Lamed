@@ -23,7 +23,7 @@ class SingleContent extends Component {
     renderPermissions() {
         return (
             // Added the id so could find the content more easily
-            <select defaultValue={this.props.content.permission || permissions[0]} onChange = {this.handlePermissionChoose}>
+            <select id={`permission${this.props.passedId}`} defaultValue={this.props.content.permission || permissions[0]} onChange = {this.handlePermissionChoose}>
                 {
                     permissions.map((currPermission, currIndex) => {
                         return <option value = {currPermission} key={currIndex}> {currPermission} </option>
@@ -39,7 +39,8 @@ class SingleContent extends Component {
                 {
                     this.renderPermissions()
                 }
-                <Editor passedId={this.props.passedId} content={this.props.content.content} className = "col-lg-8"/>
+                <Editor passedId={this.props.passedId} content={this.props.content.content}
+                        className = "col-lg-8" isReadOnly = {this.props.isReadOnly}/>
             </div>
         );
     }

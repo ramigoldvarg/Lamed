@@ -128,7 +128,7 @@ class AddDocument extends Component {
     renderContentAdd() {
         return this.state.contents.map((currContent, currIndex) => {
             return (
-                 <SingleContent passedId={new Date().getTime() + currIndex + 1} key = {currIndex} content={currContent} onPermissionChange = {this.handleLastPermissionChange} />
+                 <SingleContent isReadOnly={false} passedId={new Date().getTime() + currIndex + 1} key = {currIndex} content={currContent} onPermissionChange = {this.handleLastPermissionChange} />
             );
         });
     }
@@ -163,7 +163,7 @@ class AddDocument extends Component {
                 <input type="text" onChange={this.handleDocumentNameChange} />
                 <br/>
                 <div>
-                    <SingleContent passedId={new Date().getTime()} content={{permission: undefined}} onPermissionChange = {this.handleLastPermissionChange} />
+                    <SingleContent isReadOnly = {false} passedId={new Date().getTime()} content={{permission: undefined}} onPermissionChange = {this.handleLastPermissionChange} />
                     {
                         this.renderContentAdd()    
                     }

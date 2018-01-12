@@ -32,19 +32,14 @@ import '../../TinyMCE/js/tinymce/langs/he_IL.js';
 
 
 class Editor extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
-        this.state = {editor: null}
+        this.state = {
+            editor: null
+        }
     }
-
-    addDocument(e) {
-        e.preventDefault();
-        let send = {
-            "hello": "<h1>world</h1>"
-        };
-        axios.post('/pages', send);
-    }
+    
 
     componentWillUnmount() {
         tinymce.remove(this.state.editor);
@@ -108,6 +103,7 @@ class Editor extends Component {
             resize: 'both',
             directionality : 'rtl',
             language: 'he_IL',
+            readonly: this.props.isReadOnly,
             plugins: [
                 'advlist autolink lists link example image charmap print preview anchor textcolor',
                 'searchreplace visualblocks code fullscreen',
