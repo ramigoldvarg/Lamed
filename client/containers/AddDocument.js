@@ -17,9 +17,12 @@ class AddDocument extends Component {
         this.state = { 
             files: [],
             documentName: "",
-            contents: [],
+            contents: [ {
+                "permission": permissions[0],
+                "content": ""
+            }],
             chosenHashtags: [],
-            lastPermission: permissions[0]
+            // lastPermission: permissions[0]
         };
 
         this.onDrop = this.onDrop.bind(this);
@@ -87,26 +90,28 @@ class AddDocument extends Component {
     }
 
     addContent() {
-        const newContents = this.state.contents.slice();
+        const newContents = this.state.contents.slice().map(curr=> {
+            curr.content = tinyMCE.editors["text"+curr.passedId].getContent();
+            return curr;
+        });
+
         const newestContent = { 
-            content: tinyMCE.activeEditor.getContent(),
-            permission: this.state.lastPermission
+            content: "",
+            permission: permissions[0]
         };
 
         newContents.push(newestContent);
+
         this.setState({
             contents: newContents,
-            lastPermission: permissions[0]
         });
     }
 
     addDocument() {
-        const newContents = this.state.contents.slice();
-         const newestContent = { 
-            content: tinyMCE.activeEditor.getContent(),
-            permission: this.state.lastPermission
-        };
-        newContents.push(newestContent);
+        const newContents = this.state.contents.slice().map(curr=> {
+            curr.content = tinyMCE.editors["text"+curr.passedId].getContent();
+            return curr;
+        });
 
         const documentToAdd = {
             name: this.state.documentName,
@@ -120,15 +125,27 @@ class AddDocument extends Component {
     }
 
     handleLastPermissionChange(permission) {
+        let {contents} = this.state;
+        let contentToEdit = this.state.contents.find(curr => curr.passedId == permission.id.split("permission")[1]);
+        const permissionIndex = contents.indexOf(contentToEdit);
+        contentToEdit.permission = permission.value;
+
+        // Removing the old content and inserting the new permission
+        contents.splice(contents.indexOf(contentToEdit), 1, contentToEdit);
+
         this.setState({
-            lastPermission: permission
+            contents: contents
         })
     }
 
     renderContentAdd() {
         return this.state.contents.map((currContent, currIndex) => {
+            if (currContent.passedId == undefined) {
+                currContent.passedId = new Date().getTime() + currIndex + 1;
+            }
+
             return (
-                 <SingleContent isReadOnly={false} passedId={new Date().getTime() + currIndex + 1} key = {currIndex} content={currContent} onPermissionChange = {this.handleLastPermissionChange} />
+                 <SingleContent isReadOnly={false} passedId={currContent.passedId} key = {currIndex} content={currContent} onPermissionChange = {this.handleLastPermissionChange} />
             );
         });
     }
@@ -163,7 +180,7 @@ class AddDocument extends Component {
                 <input type="text" onChange={this.handleDocumentNameChange} />
                 <br/>
                 <div>
-                    <SingleContent isReadOnly = {false} passedId={new Date().getTime()} content={{permission: undefined}} onPermissionChange = {this.handleLastPermissionChange} />
+                    {/* <SingleContent isReadOnly = {false} passedId={new Date().getTime()} content={{permission: undefined}} onPermissionChange = {this.handleLastPermissionChange} /> */}
                     {
                         this.renderContentAdd()    
                     }

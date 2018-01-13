@@ -17,13 +17,13 @@ class SingleContent extends Component {
     }
 
     handlePermissionChoose(e) {
-        this.props.onPermissionChange(e.target.value);
+        this.props.onPermissionChange(e.target);
     }
 
     renderPermissions() {
         return (
             // Added the id so could find the content more easily
-            <select id={`permission${this.props.passedId}`} defaultValue={this.props.content.permission || permissions[0]} onChange = {this.handlePermissionChoose}>
+            <select id={`permission${this.props.passedId}`} defaultValue={this.props.content.permission} onChange = {this.handlePermissionChoose}>
                 {
                     permissions.map((currPermission, currIndex) => {
                         return <option value = {currPermission} key={currIndex}> {currPermission} </option>

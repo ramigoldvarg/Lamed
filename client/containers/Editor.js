@@ -49,8 +49,8 @@ class Editor extends Component {
         tinymce.init({
             selector : `#text${this.props.passedId}`,
             mode: "exact",
-            init_instance_callback: function (editor) {
-                // this.setState({editor})
+            init_instance_callback: (editor) => {
+                this.setState({editor})
 
                 // Dealing with dropping pictures
                 editor.on('DragOver', e=> e.preventDefault());
@@ -76,19 +76,19 @@ class Editor extends Component {
                     // Shows the images that were added
                     request.then(result => {
                         // /In case there is a need to define the sizeof pictures
-                        // tinyMCE.activeEditor.windowManager.open({
+                        // editor.windowManager.open({
                         //     width:500,
                         //     height:230,
 
                         // })
 
-                        let updatedContentWithImages = tinyMCE.activeEditor.getContent();
+                        let updatedContentWithImages = editor.getContent();
             
                         // Adds the images to the current text with fixed size
                         updatedContentWithImages = result.data.imageUrls.reduce((acu,curr)=>acu + "<img src='" + curr + "' height='200' width='200'/>", updatedContentWithImages);
             
                         // Set the content of the editor
-                        tinyMCE.activeEditor.setContent(updatedContentWithImages);
+                        editor.setContent(updatedContentWithImages);
                     })
                 });
 
