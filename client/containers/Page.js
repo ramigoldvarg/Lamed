@@ -1,18 +1,32 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getSinglePage, deletePage} from '../actions/index.js';
+import {getSinglePage, deletePage, editPage} from '../actions/index.js';
 import {bindActionCreators} from 'redux';
 import { Link } from 'react-router-dom';
+
+import SingleContent from './SingleContent';
 
 class Page extends Component {
     constructor(props) {
         super(props);
+        
+        this.state = {
+            isReadOnly: true
+        }
+
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleDeleteContent = this.handleDeleteContent.bind(this);
         this.renderContents = this.renderContents.bind(this);
+        this.handleModeChange = this.handleModeChange.bind(this);
+        // this.handleUpdate = this.handleUpdate.bind(this);
     }
 
     componentDidMount() {
         this.props.getSinglePage(this.props.match.params.id);
+    }
+
+    componentWillUnmount() {
+        tinyMCE.remove();
     }
 
     handleDelete() {
@@ -21,23 +35,57 @@ class Page extends Component {
         });
     }
 
-    renderContents() {
-        return this.props.singlePage.contents.map(curr=> (
-            <div key={curr.permission}>
-                <h3>{curr.permission}</h3>
-                <div dangerouslySetInnerHTML={{__html:curr.content}}>
-                </div>
-            </div>
-        ));
+    handleDeleteContent(contentId) {
+        let {contents} = this.props.singlePage;
+        tinymce.remove();
+        contents.splice(contents.indexOf(contents.find(curr=> curr.id == contentId)), 1);
+        this.setState({contents});
     }
+
+    renderContents() {
+        return this.contents.map((curr,index)=> 
+            <div key={index}>
+                <SingleContent onDeleteContent={this.handleDeleteContent} passedId={curr.id} content={curr} isReadOnly = {this.state.isReadOnly}/>
+            </div>
+        );
+    }
+
+    handleModeChange(e) {
+        this.setState({
+            isReadOnly: (e.target.value == 'true')
+        });
+    }
+
+    // handleUpdate() {
+    //     let contentsToSend = this.contents.map(element => {
+    //         element.content = tinymce.editors.find(curr => curr.id == `text${element.id}`).getContent();
+    //         return element;
+    //     });
+
+    //     this.props.editPage(this.props.match.params.id, {contents: contentsToSend}, (data) =>{
+    //         this.props.history.push("/pages/" + data.data.id);
+    //     })
+    // }
 
     render() {
         if (!this.props.singlePage) {
             return <h3> טוען</h3>;
         }
 
+        // Doing it so i could get the info from the editors
+        this.contents = this.props.singlePage.contents.map((curr,index)=> {
+            if (curr.id == undefined) {
+                curr.id = new Date().getTime() + index;
+            }
+
+            return curr;
+        });
+
         return (
             <div>
+                <input type = "radio" name = "mode" defaultChecked = {true} onClick = {this.handleModeChange} value = {true} />צפייה 
+                <input type = "radio" name = "mode" onClick = {this.handleModeChange} value = {false} />עדכון 
+                <br/><br/><br/><br/>
                 <Link to="/">
                     חזור לדף בית
                 </Link>
@@ -46,6 +94,7 @@ class Page extends Component {
                 </div>
                 <button onClick={this.handleDelete}> X </button>
                 {this.renderContents()}
+                <button disabled = {this.state.isReadOnly} onClick={this.handleUpdate}>עדכן</button>
             </div>
         )
     }
@@ -56,7 +105,7 @@ function mapStateToProps({singlePage}) {
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({getSinglePage, deletePage}, dispatch);
+    return bindActionCreators({getSinglePage, deletePage, editPage}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page);
