@@ -34,6 +34,13 @@ class AddDocument extends Component {
         this.handleDocumentNameChange = this.handleDocumentNameChange.bind(this);
         this.addDocument = this.addDocument.bind(this);
         this.handleLastPermissionChange = this.handleLastPermissionChange.bind(this);
+        this.handleDeleteContent = this.handleDeleteContent.bind(this);
+    }
+
+    componentWillUnmount() {
+        tinyMCE.editors.forEach(element => {
+            tinyMCE.remove(element);
+        });
     }
 
     // Handles the drop event on the dropzone.
@@ -124,6 +131,13 @@ class AddDocument extends Component {
         });
     }
 
+    handleDeleteContent(contentId) {
+        let {contents} = this.state;
+        tinyMCE.remove();
+        contents = contents.filter(curr => curr.passedId != contentId);
+        this.setState({contents});
+    }
+
     handleLastPermissionChange(permission) {
         let {contents} = this.state;
         let contentToEdit = this.state.contents.find(curr => curr.passedId == permission.id.split("permission")[1]);
@@ -145,7 +159,7 @@ class AddDocument extends Component {
             }
 
             return (
-                 <SingleContent isReadOnly={false} passedId={currContent.passedId} key = {currIndex} content={currContent} onPermissionChange = {this.handleLastPermissionChange} />
+                 <SingleContent isReadOnly={false} passedId={currContent.passedId} onDeleteContent={this.handleDeleteContent} key = {currIndex} content={currContent} onPermissionChange = {this.handleLastPermissionChange} />
             );
         });
     }

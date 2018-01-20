@@ -14,6 +14,12 @@ class SingleContent extends Component {
 
         this.handlePermissionChoose = this.handlePermissionChoose.bind(this);
         this.renderPermissions = this.renderPermissions.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleContentChange = this.handleContentChange.bind(this);
+    }
+
+    handleContentChange(content) {
+        this.props.content.content = content;
     }
 
     handlePermissionChoose(e) {
@@ -23,7 +29,7 @@ class SingleContent extends Component {
     renderPermissions() {
         return (
             // Added the id so could find the content more easily
-            <select id={`permission${this.props.passedId}`} defaultValue={this.props.content.permission} onChange = {this.handlePermissionChoose}>
+            <select id={`permission${this.props.passedId}`} value={this.props.content.permission} onChange = {this.handlePermissionChoose}>
                 {
                     permissions.map((currPermission, currIndex) => {
                         return <option value = {currPermission} key={currIndex}> {currPermission} </option>
@@ -33,6 +39,10 @@ class SingleContent extends Component {
         )
     }
 
+    handleDelete() {
+        this.props.onDeleteContent(this.props.passedId);
+    }
+
     render() {
         return (
             <div className = "row">
@@ -40,7 +50,8 @@ class SingleContent extends Component {
                     this.renderPermissions()
                 }
                 <Editor passedId={this.props.passedId} content={this.props.content.content}
-                        className = "col-lg-8" isReadOnly = {this.props.isReadOnly}/>
+                        className = "col-lg-8" isReadOnly = {this.props.isReadOnly} handleContentChage={this.handleContentChange}/>
+                <button onClick={this.handleDelete}>X</button>
             </div>
         );
     }

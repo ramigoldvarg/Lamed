@@ -14,6 +14,7 @@ class EditDocument extends Component {
         super(props);
         this.renderContents = this.renderContents.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleDeleteContent = this.handleDeleteContent.bind(this);
     }
 
     componentDidMount() {
@@ -21,7 +22,15 @@ class EditDocument extends Component {
     }
 
     renderContents() {
-        return this.contents.map((curr,index)=> <div key={index}><SingleContent passedId={curr.id} content={curr}/></div>);
+        return this.contents.map((curr,index)=> <div key={index}><SingleContent onDeleteContent={this.handleDeleteContent} passedId={curr.id} content={curr}/></div>);
+        // return this.contents.map((curr,index)=> <div key={index}>{curr.permission} {curr.content} </div>)
+    }
+
+    handleDeleteContent(contentId) {
+        let {contents} = this.props.singlePage;
+        tinymce.remove();
+        contents.splice(contents.indexOf(contents.find(curr=> curr.id == contentId)), 1);
+        this.setState({contents});
     }
 
     handleUpdate() {
@@ -42,7 +51,9 @@ class EditDocument extends Component {
         
         // Doing it so i could get the info from the editors
         this.contents = this.props.singlePage.contents.map((curr,index)=> {
-            curr.id = new Date().getTime() + index;
+            if (curr.id == undefined) {
+                curr.id = new Date().getTime() + index;
+            }
 
             return curr;
         });

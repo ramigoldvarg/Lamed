@@ -38,19 +38,21 @@ class Editor extends Component {
         this.state = {
             editor: null
         }
+
+        this.initTiny = this.initTiny.bind(this);
     }
-    
 
-    componentWillUnmount() {
-        tinymce.remove(this.state.editor);
-      }
-
-    componentDidMount() {
+    initTiny() {
         tinymce.init({
             selector : `#text${this.props.passedId}`,
             mode: "exact",
             init_instance_callback: (editor) => {
-                this.setState({editor})
+                this.setState({editor});
+                editor.setContent(this.props.content);
+                
+                editor.on('keyup change', e=> {
+                    this.props.handleContentChage(e.target.getContent());
+                });
 
                 // Dealing with dropping pictures
                 editor.on('DragOver', e=> e.preventDefault());
@@ -113,9 +115,27 @@ class Editor extends Component {
         });
     }
 
+    componentWillUpdate() {
+        if (this.state.editor != null) {
+            tinymce.remove(this.state.editor);
+        }
+    }
+
+    componentDidUpdate() {
+        if (tinymce.editors[`text${this.props.passedId}`] == undefined) {
+            this.initTiny();    
+        }
+    }
+
+    componentDidMount() {
+        if (tinymce.editors[`text${this.props.passedId}`] == undefined) {
+            this.initTiny();
+        }
+    }
+
     render() {
        return (
-            <textarea id={`text${this.props.passedId}`} defaultValue={this.props.content}>
+            <textarea id={`text${this.props.passedId}`} value={this.props.content} onChange={this.props.handleContentChage}>
             </textarea>
         );
     }
