@@ -38,9 +38,7 @@ class AddDocument extends Component {
     }
 
     componentWillUnmount() {
-        tinyMCE.editors.forEach(element => {
-            tinyMCE.remove(element);
-        });
+        tinyMCE.remove();
     }
 
     // Handles the drop event on the dropzone.
@@ -98,7 +96,12 @@ class AddDocument extends Component {
 
     addContent() {
         const newContents = this.state.contents.slice().map(curr=> {
-            curr.content = tinyMCE.editors["text"+curr.passedId].getContent();
+            if (tinyMCE.editors["text"+curr.passedId] != undefined) {
+                curr.content = tinyMCE.editors["text"+curr.passedId].getContent();
+            } else {
+                curr.content = tinyMCE.editors.find(currEd => currEd.id == "text" + curr.passedId).getContent();
+            }
+
             return curr;
         });
 
@@ -116,7 +119,12 @@ class AddDocument extends Component {
 
     addDocument() {
         const newContents = this.state.contents.slice().map(curr=> {
-            curr.content = tinyMCE.editors["text"+curr.passedId].getContent();
+            if (tinyMCE.editors["text"+curr.passedId] != undefined) {
+                curr.content = tinyMCE.editors["text"+curr.passedId].getContent();
+            } else {
+                curr.content = tinyMCE.editors.find(currEd => currEd.id == "text" + curr.passedId).getContent();
+            }
+            
             return curr;
         });
 

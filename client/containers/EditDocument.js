@@ -17,6 +17,10 @@ class EditDocument extends Component {
         this.handleDeleteContent = this.handleDeleteContent.bind(this);
     }
 
+    componentWillUnmount() {
+        tinyMCE.remove();
+    }
+
     componentDidMount() {
         this.props.getSinglePage(this.props.match.params.id);
     }
