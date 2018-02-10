@@ -56,17 +56,6 @@ class Page extends Component {
         });
     }
 
-    // handleUpdate() {
-    //     let contentsToSend = this.contents.map(element => {
-    //         element.content = tinymce.editors.find(curr => curr.id == `text${element.id}`).getContent();
-    //         return element;
-    //     });
-
-    //     this.props.editPage(this.props.match.params.id, {contents: contentsToSend}, (data) =>{
-    //         this.props.history.push("/pages/" + data.data.id);
-    //     })
-    // }
-
     render() {
         if (!this.props.singlePage) {
             return <h3> טוען</h3>;
@@ -83,16 +72,18 @@ class Page extends Component {
 
         return (
             <div>
-                <input type = "radio" name = "mode" defaultChecked = {true} onClick = {this.handleModeChange} value = {true} />צפייה 
-                <input type = "radio" name = "mode" onClick = {this.handleModeChange} value = {false} />עדכון 
+                <div className="btn-group-vertical">
+                    <button className="btn btn-secondary" defaultChecked = {true} onClick = {this.handleModeChange} value = {true}>צפייה</button> 
+                    <button className="btn btn-secondary" onClick = {this.handleModeChange} value = {false}>עדכון</button> 
+                </div>
                 <br/><br/><br/><br/>
                 <Link to="/">
                     חזור לדף בית
                 </Link>
                 <div>
-                    <h2> {this.props.singlePage.name} </h2>
+                    <h2 className = "mini-header">{this.props.singlePage.name}</h2>
                 </div>
-                <button onClick={this.handleDelete}> X </button>
+                <button onClick={this.handleDelete}> מחק ערך </button>
                 {this.renderContents()}
                 <button disabled = {this.state.isReadOnly} onClick={this.handleUpdate}>עדכן</button>
             </div>

@@ -9,7 +9,7 @@ class SearchContent extends Component {
 
     render() {
         return (
-            <div>
+            <div className="search-content">
                 <SearchBar />
                 <SearchResults />
             </div>

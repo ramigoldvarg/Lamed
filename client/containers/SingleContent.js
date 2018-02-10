@@ -32,7 +32,7 @@ class SingleContent extends Component {
             <select id={`permission${this.props.passedId}`} value={this.props.content.permission} onChange = {this.handlePermissionChoose}>
                 {
                     permissions.map((currPermission, currIndex) => {
-                        return <option value = {currPermission} key={currIndex}> {currPermission} </option>
+                        return <option disabled = {this.props.isReadOnly} value = {currPermission} key={currIndex}> {currPermission} </option>
                     })
                 }
             </select>
@@ -50,8 +50,8 @@ class SingleContent extends Component {
                     this.renderPermissions()
                 }
                 <Editor passedId={this.props.passedId} content={this.props.content.content}
-                        className = "col-lg-8" isReadOnly = {this.props.isReadOnly} handleContentChage={this.handleContentChange}/>
-                <button onClick={this.handleDelete}>X</button>
+                        isReadOnly = {this.props.isReadOnly} handleContentChage={this.handleContentChange}/>
+                <button disabled = {this.props.isReadOnly} onClick={this.handleDelete}>X</button>
             </div>
         );
     }

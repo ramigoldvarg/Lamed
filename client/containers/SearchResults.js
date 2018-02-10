@@ -21,7 +21,7 @@ class SearchResults extends Component {
 
     render() {
         if (!this.props.pages) {
-            return (<h2> נסה את המזל ותראה מה אתה יכול עוד ללמוד</h2>);
+            return (<h2 dir="rtl"> נסה את המזל ותראה מה אתה יכול עוד ללמוד</h2>);
         }
 
         return (

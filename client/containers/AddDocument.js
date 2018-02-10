@@ -212,9 +212,6 @@ class AddDocument extends Component {
                     <button className = "col-lg-2" onClick = {this.addContent}>הוסף תוכן נוסף!</button>
                 </div>
                 <div>
-                    <DropZone onDrop={this.onDrop}>
-                        <p>מה עם איזה תמונה?</p>
-                    </DropZone>
                     <span>
                         {
                             this.state.files.map(file => <input value={file} onClick={this.handleClick} key={file} readOnly/>)

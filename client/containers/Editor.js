@@ -99,19 +99,21 @@ class Editor extends Component {
                 // })
             },
             height: 150,
-            width: 1050,
+            width: screen.width,
             branding: false,
             toolbar: "forecolor backcolor",
             resize: 'both',
             directionality : 'rtl',
             language: 'he_IL',
             readonly: this.props.isReadOnly,
-            plugins: [
+            menubar: !this.props.isReadOnly,
+            statusbar: !this.props.isReadOnly,
+            plugins: (!this.props.isReadOnly) && [
                 'advlist autolink lists link example image charmap print preview anchor textcolor',
                 'searchreplace visualblocks code fullscreen',
-                'media table contextmenu paste code help',
+                'media table contextmenu paste code help'
             ],
-            toolbar: '  example | insert | undo redo | formatselect | bold italic backcolor forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat'
+            toolbar: (!this.props.isReadOnly) && ' example | insert | undo redo | formatselect | bold italic backcolor forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat'
         });
     }
 

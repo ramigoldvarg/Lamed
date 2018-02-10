@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
       <HashRouter>
         <Switch>
           <Route path="/AddDocument" component={AddDocument} />
-          <Route path = "/tiny" component={Editor} />
           <Route path = "/pages/:id/edit" component={EditDocument} />
           <Route path="/pages/:id" component={Page} />
           <Route exact path="/" component={Home} />
