@@ -1,5 +1,6 @@
 var models = require('express').Router();
 const fs = require('fs');
+const Emitter = require('events');
 
 /**
  * Saves the images to the server and returns the image urls. Can save more than one
@@ -8,6 +9,20 @@ const fs = require('fs');
 models.post('/', (req, res) => {
     let didErrorOcurred = false;
     let imageUrls = [];
+    let processedImages = 0;
+    var emmiter = new Emitter();
+
+    emmiter.on('send', ()=> {
+        if (didErrorOcurred) {
+            res.status(500).json({message: "התמונה לא נשמרה בשרת"});
+        } else {
+            res.status(200).json({message:"תן בראש ותשתמש בתמונות", imageUrls: imageUrls});
+            // // res.sendFile(__dirname + "../../../../images/" + req.files["blured.jpg"].name)
+            // var img = fs.readFileSync(__dirname + "../../../../images/" + req.files["blured.jpg"].name);
+            // res.writeHead(200, {'Content-Type': 'image/jpeg' });
+            // res.end(img, 'binary');
+        }
+    });
 
     // Going through all the pictures
     for (let currFile in req.files) {
@@ -24,9 +39,12 @@ models.post('/', (req, res) => {
 
         // Error writing the picture
         is.on('error', function(err) {
+            processedImages++;
             if (err) {
                 didErrorOcurred = true;
             }
+
+            processedImages == Object.keys(req.files).length ? emmiter.emit('sent') : '';
         });
         
         // file end
@@ -36,19 +54,13 @@ models.post('/', (req, res) => {
                 if (err) {
                     didErrorOcurred = true;
                 }
+                
+                processedImages++;
+                processedImages == Object.keys(req.files).length ? emmiter.emit('send') : '';
             });
         });
     }
     
-    if (didErrorOcurred) {
-        res.status(500).json({message: "התמונה לא נשמרה בשרת"});
-    } else {
-        res.status(200).json({message:"תן בראש ותשתמש בתמונות", imageUrls: imageUrls});
-        // // res.sendFile(__dirname + "../../../../images/" + req.files["blured.jpg"].name)
-        // var img = fs.readFileSync(__dirname + "../../../../images/" + req.files["blured.jpg"].name);
-        // res.writeHead(200, {'Content-Type': 'image/jpeg' });
-        // res.end(img, 'binary');
-    }
 });
 
 models.get('/', (req,res) => {
