@@ -50,8 +50,8 @@ class Editor extends Component {
                 this.setState({editor});
                 editor.setContent(this.props.content);
                 
-                editor.on('keyup change', e=> {
-                    this.props.handleContentChage(e.target.getContent());
+                editor.on('keyup', e=> {
+                    this.props.handleContentChage(editor.getContent());
                 });
 
                 // Dealing with dropping pictures
