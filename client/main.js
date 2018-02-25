@@ -8,7 +8,6 @@ import rootReducer from './reducers/reducer_root.js';
 
 import Home from './components/Home.js';
 import AddDocument from './containers/AddDocument.js';
-import Editor from './containers/Editor.js';
 import Page from './containers/Page.js'
 
 import { HashRouter, Route, Switch, Link } from 'react-router-dom';

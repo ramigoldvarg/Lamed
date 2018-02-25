@@ -3,8 +3,7 @@ import axios from 'axios';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {editPage, getSinglePage} from '../actions/index.js';
-import SingleContent from './SingleContent.js';
-import Editor from './Editor.js';
+import SingleContent from '../components/SingleContent.js';
 import {Link} from 'react-router-dom';
 
 import '../stylesheets/index.css'

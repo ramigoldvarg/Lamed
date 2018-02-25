@@ -4,7 +4,7 @@ import {getSinglePage, deletePage, editPage} from '../actions/index.js';
 import {bindActionCreators} from 'redux';
 import { Link } from 'react-router-dom';
 
-import SingleContent from './SingleContent';
+import SingleContent from '../components/SingleContent';
 
 class Page extends Component {
     constructor(props) {

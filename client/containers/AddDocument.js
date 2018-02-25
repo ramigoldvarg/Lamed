@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {addPage} from '../actions/index.js';
 import {hashtags} from '../globals.js';
 import {permissions} from '../globals.js'
-import SingleContent from './SingleContent.js';
+import SingleContent from '../components/SingleContent.js';
 import { Link } from 'react-router-dom';
 
 import '../stylesheets/index.css'
