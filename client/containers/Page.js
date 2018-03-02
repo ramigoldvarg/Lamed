@@ -18,7 +18,7 @@ class Page extends Component {
         this.handleDeleteContent = this.handleDeleteContent.bind(this);
         this.renderContents = this.renderContents.bind(this);
         this.handleModeChange = this.handleModeChange.bind(this);
-        // this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleUpdate= this.handleUpdate.bind(this);
     }
 
     componentDidMount() {
@@ -54,6 +54,18 @@ class Page extends Component {
         this.setState({
             isReadOnly: (e.target.value == 'true')
         });
+    }
+
+    handleUpdate() {
+        let contentsToSend = this.contents.map(element => {
+            element.content = tinymce.editors.find(curr => curr.id == `text${element.id}`).getContent();
+            return element;
+        });
+
+        this.props.editPage(this.props.match.params.id, {contents: contentsToSend}, (data) =>{
+            // this.props.history.push("/pages/" + data.data.id);
+            this.props.history.push("/");
+        })
     }
 
     render() {

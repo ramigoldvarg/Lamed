@@ -117,9 +117,10 @@ class Editor extends Component {
         });
     }
 
-    componentWillUpdate() {
+    componentWillReceiveProps() {
         if (this.state.editor != null) {
             tinymce.remove(this.state.editor);
+            // this.initTiny();
         }
     }
 
