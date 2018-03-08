@@ -1,0 +1,38 @@
+.addDocumentBody {
+    text-align: center;
+}
+
+.header {
+    font-size: 60px;
+    color:blue;
+    text-align: center;
+}
+
+.mini-header {
+    text-align: center;
+}
+
+.search-bar {
+    text-align: center;
+}
+
+.form-control  {
+    display: inline !important;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+.content {
+    text-align: right;
+}
+
+.add-document-button {
+    text-align: center;
+}
